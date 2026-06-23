@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ألوان مستوحاة من اللوجو: الأخضر الزيتي والبيج */
+    --background: 138 16% 16%; /* زيتي فاخر */
+    --foreground: 48 35% 85%; /* بيج فاتح */
+    --card: 138 16% 14%;
+    --card-foreground: 48 35% 85%;
+    --popover: 138 16% 14%;
+    --popover-foreground: 48 35% 85%;
+    --primary: 48 35% 74%; /* لون البيج الأساسي */
+    --primary-foreground: 138 16% 10%;
+    --secondary: 138 16% 20%;
+    --secondary-foreground: 48 35% 85%;
+    --muted: 138 16% 20%;
+    --muted-foreground: 138 10% 65%;
+    --accent: 48 35% 74%;
+    --accent-foreground: 138 16% 10%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 138 16% 22%;
+    --input: 138 16% 22%;
+    --ring: 48 35% 74%;
+    --radius: 0.75rem;
+    --sidebar-background: 138 16% 14%;
+    --sidebar-foreground: 48 35% 85%;
+    --sidebar-primary: 48 35% 74%;
+    --sidebar-primary-foreground: 138 16% 10%;
+    --sidebar-accent: 138 16% 20%;
+    --sidebar-accent-foreground: 48 35% 85%;
+    --sidebar-border: 138 16% 20%;
+    --sidebar-ring: 48 35% 74%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.08];
+  }
+
+  .glass-strong {
+    @apply bg-white/[0.07] backdrop-blur-2xl border border-white/[0.12];
+  }
+
+  .glass-panel {
+    @apply bg-gradient-to-br from-white/[0.05] to-white/[0.02] backdrop-blur-xl border border-white/[0.08] shadow-xl;
+  }
+
+  .glass-card {
+    @apply bg-gradient-to-br from-white/[0.07] to-transparent backdrop-blur-lg border border-white/[0.1] rounded-xl shadow-lg transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply from-white/[0.1] to-white/[0.03] border-white/[0.15] shadow-xl;
+    transform: translateY(-2px);
+  }
+
+  .glass-input {
+    @apply bg-white/[0.05] backdrop-blur-md border border-white/[0.1] rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500/50 transition-all duration-200;
+  }
+
+  .glass-button {
+    @apply bg-gradient-to-r from-gold-500/90 to-gold-600/90 backdrop-blur-md text-slate-900 font-semibold px-5 py-2.5 rounded-lg shadow-lg shadow-gold-500/20 transition-all duration-300 hover:from-gold-400 hover:to-gold-500 hover:shadow-gold-500/30 hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .glass-button-secondary {
+    @apply bg-white/[0.08] backdrop-blur-md border border-white/[0.12] text-white/90 font-medium px-5 py-2.5 rounded-lg transition-all duration-300 hover:bg-white/[0.12] hover:border-white/[0.18] active:scale-[0.98];
+  }
+
+  .glass-sidebar {
+    /* تم التعديل لتناسب الأخضر الزيتي بدلاً من الأزرق الداكن */
+    @apply bg-gradient-to-b from-[#1a241f] to-[#121a16]/95 backdrop-blur-2xl border-r border-white/[0.06];
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-white/60 transition-all duration-200 hover:bg-white/[0.06] hover:text-white/90;
+  }
+
+  .sidebar-item.active {
+    @apply bg-gradient-to-r from-gold-500/20 to-transparent text-gold-400 border-r-2 border-gold-500;
+  }
+
+  .nav-glass {
+    /* تم التعديل للزيتي */
+    @apply bg-[#1a241f]/80 backdrop-blur-2xl border-b border-white/[0.06];
+  }
+
+  .stat-card {
+    @apply glass-card p-6 relative overflow-hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    @apply absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-gold-500/10 to-transparent rounded-bl-full;
+  }
+
+  .page-title {
+    @apply text-2xl font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-white/90;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-gold-400 to-gold-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-gold {
+    @apply bg-gradient-to-r from-gold-500 to-gold-600;
+  }
+
+  .gradient-silver {
+    @apply bg-gradient-to-r from-silver-300 to-silver-500;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(225, 217, 193, 0.15), 0 0 40px rgba(225, 217, 193, 0.05);
+  }
+
+  .glow-silver {
+    box-shadow: 0 0 20px rgba(192, 192, 192, 0.1), 0 0 40px rgba(192, 192, 192, 0.03);
+  }
+
+  .table-glass {
+    @apply w-full;
+  }
+
+  .table-glass thead {
+    @apply bg-white/[0.04];
+  }
+
+  .table-glass th {
+    @apply px-4 py-3 text-right text-xs font-medium text-white/50 uppercase tracking-wider;
+  }
+
+  .table-glass tbody tr {
+    @apply border-b border-white/[0.04] transition-colors duration-200 hover:bg-white/[0.03];
+  }
+
+  .table-glass td {
+    @apply px-4 py-3 text-sm text-white/80;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-gold {
+    @apply badge bg-gold-500/15 text-gold-400 border border-gold-500/20;
+  }
+
+  .badge-silver {
+    @apply badge bg-silver-500/15 text-silver-400 border border-silver-500/20;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-500/15 text-emerald-400 border border-emerald-500/20;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-500/15 text-amber-400 border border-amber-500/20;
+  }
+
+  .badge-danger {
+    @apply badge bg-red-500/15 text-red-400 border border-red-500/20;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* حل مشكلة القوائم المنسدلة في الوضع الداكن لتتناسق مع الهوية */
+select option {
+  background-color: #212B24; /* لون زيتي داكن للوجو */
+  color: #E1D9C1; /* لون البيج */
+  padding: 10px;
+}
+
+select option:checked {
+  background-color: #2D3A31; /* تمييز الخيار المحدد */
+}

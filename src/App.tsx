@@ -1,0 +1,118 @@
+import React, { useState, useEffect } from 'react'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { auth } from './firebase'
+import { onAuthStateChanged } from 'firebase/auth'
+import { Menu, X } from 'lucide-react' // استيراد أيقونات القائمة للجوال
+
+// استيراد صفحات النظام
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import Inventory from './pages/Inventory'
+import Sales from './pages/Sales'
+import Purchases from './pages/Purchases'
+import Reports from './pages/Reports'
+import Accounting from './pages/Accounting'
+import Customers from './pages/Customers'
+import Suppliers from './pages/Suppliers'
+
+// استدعاء القائمة الجانبية
+import Sidebar from './components/Sidebar'
+
+// مكون حماية الصفحات
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser)
+      setLoading(false)
+    })
+    return () => unsubscribe()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#2B3A32] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#C5CBAF] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
+  }
+
+  return user ? children : <Navigate to="/login" />
+}
+
+// 🌟 المكون السحري المحدث ليناسب الجوال واللابتوب
+function MainLayout({ children }: { children: React.ReactNode }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const location = useLocation()
+
+  // إغلاق القائمة تلقائياً عند تغيير الصفحة من الجوال
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [location.pathname])
+
+  return (
+    <div className="flex h-screen bg-[#0a0a0c] overflow-hidden text-white" dir="rtl">
+      
+      {/* خلفية سوداء ضبابية للجوال لما تفتح القائمة */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm transition-opacity"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* القائمة الجانبية مع أنيميشن الدخول والخروج للجوال */}
+      <div className={`fixed inset-y-0 right-0 z-50 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        {/* زر إغلاق القائمة (يظهر فقط في الجوال جوا القائمة) */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="absolute top-4 left-4 p-2 bg-red-500/10 text-red-400 rounded-lg lg:hidden hover:bg-red-500/20 z-50 transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+        <Sidebar />
+      </div>
+      
+      {/* محتوى الصفحات */}
+      <main className="flex-1 flex flex-col w-full h-full overflow-hidden">
+        {/* هيدر مخصص للجوال يظهر فيه زر القائمة (الهامبرغر) */}
+        <div className="lg:hidden flex items-center justify-between p-4 border-b border-white/5 bg-[#2B3A32]">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-bold text-[#C5CBAF] tracking-widest uppercase">LUXEBLOOM</h2>
+          </div>
+          <button 
+            onClick={() => setIsMobileMenuOpen(true)} 
+            className="p-2 bg-[#C5CBAF]/10 text-[#C5CBAF] rounded-lg hover:bg-[#C5CBAF]/20 transition-colors"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar relative">
+          {children}
+        </div>
+      </main>
+    </div>
+  )
+}
+
+export default function App() {
+  return (
+    <Routes>
+      {/* صفحة تسجيل الدخول */}
+      <Route path="/login" element={<Login />} />
+
+      {/* باقي الصفحات المغلفة بـ MainLayout الجديد */}
+      <Route path="/" element={<ProtectedRoute><MainLayout><Dashboard /></MainLayout></ProtectedRoute>} />
+      <Route path="/inventory" element={<ProtectedRoute><MainLayout><Inventory /></MainLayout></ProtectedRoute>} />
+      <Route path="/sales" element={<ProtectedRoute><MainLayout><Sales /></MainLayout></ProtectedRoute>} />
+      <Route path="/purchases" element={<ProtectedRoute><MainLayout><Purchases /></MainLayout></ProtectedRoute>} />
+      <Route path="/reports" element={<ProtectedRoute><MainLayout><Reports /></MainLayout></ProtectedRoute>} />
+      <Route path="/accounting" element={<ProtectedRoute><MainLayout><Accounting /></MainLayout></ProtectedRoute>} />
+      <Route path="/customers" element={<ProtectedRoute><MainLayout><Customers /></MainLayout></ProtectedRoute>} />
+      <Route path="/suppliers" element={<ProtectedRoute><MainLayout><Suppliers /></MainLayout></ProtectedRoute>} />
+    </Routes>
+  )
+}

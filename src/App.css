@@ -1,0 +1,62 @@
+/* =========================================
+   إعدادات المظهر الفاتح (Light Mode)
+========================================= */
+html.light body {
+  background-color: #f3f4f6 !important;
+  background-image: none !important;
+  color: #111827 !important;
+}
+
+html.light .glass, 
+html.light .glass-card, 
+html.light .glass-panel {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+  color: #111827 !important;
+}
+
+/* تحويل النصوص البيضاء إلى سوداء/رمادية */
+html.light .text-white, 
+html.light .text-white\/90, 
+html.light .text-white\/80 {
+  color: #111827 !important;
+}
+
+html.light .text-white\/60, 
+html.light .text-white\/50, 
+html.light .text-white\/40 {
+  color: #4b5563 !important;
+}
+
+/* تحويل الخلفيات الشفافة البيضاء إلى سوداء شفافة */
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.05\], 
+html.light .bg-white\/\[0\.06\], 
+html.light .bg-white\/5, 
+html.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* تظبيط حقول الإدخال والجداول */
+html.light input.glass-input, 
+html.light select.glass-input {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #111827 !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+html.light .table-glass th {
+  border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+  color: #4b5563 !important;
+}
+
+html.light .table-glass td {
+  border-bottom-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .page-title, 
+html.light .section-title {
+  color: #000 !important;
+}
