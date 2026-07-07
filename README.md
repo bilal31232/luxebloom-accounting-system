@@ -1,4 +1,4 @@
-LuxeBloom — Accounting & Inventory Management System
+#LuxeBloom — Accounting & Inventory Management System
 
 A full-stack accounting and inventory management system I designed and built end-to-end for LuxeBloom, my own business — covering sales, inventory, and financial records.
 
